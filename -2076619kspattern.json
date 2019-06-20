@@ -1,0 +1,133 @@
+{
+  "59775800#1": [
+    {
+      "KeyReleaseDelay": 287.9888888881, //delay when a key in not press (no present when it's the first letter on a new input)
+      "primaryCode": 116, // <= Code of the key (letter) press
+      "PressureOnPress": 0.003921568859368563, // <= pressure on the key, doesn't work on my phone :/
+      "XOnPress": 476, // <= finger position X on the key when it's press
+      "YOnPress": 116, // <= finger position Y on the key when it's press
+      /*
+        Stacks of Acceleration data on press.
+        The firt data (-0.7127 for x, -0.2488 for y and -0.3642 for z) is the value when the key is press,
+        the other values precede the first value and are ordered (First value is the most recent one, following by the second, etc....).
+      */
+      "LinearAccelerationOnPress": {
+        "x": [
+          -0.7127,
+          -1.9355999,
+          -1.4054999,
+          -0.1152,
+          -1.2286,
+          -1.3878
+        ],
+        "y": [
+          -0.2488,
+          -0.0345,
+          0.50879997,
+          0.6691,
+          -0.2183,
+          -0.6615
+        ],
+        "z": [
+          -0.3642,
+          0.98759997,
+          0.706,
+          0.101799995,
+          0.8505,
+          0.38189998
+        ]
+      },
+      // The same for RotationVectore data (gyroscope).
+      "RotationVectorOnPress": {
+        "x": [
+          0.101065,
+          0.098379,
+          0.083759,
+          0.081665,
+          0.073062,
+          -0.069814
+        ],
+        "y": [
+          0.255171,
+          0.255087,
+          0.25662,
+          0.259635,
+          0.262515,
+          -0.265517
+        ],
+        "z": [
+          0.960991,
+          0.961577,
+          0.962711,
+          0.962223,
+          0.962156,
+          -0.961546
+        ]
+      },
+      "KeyPressDelay": 88.319271, //The delay between this key press event and this key press release.
+      "PressureOnRelease": 0.003921568859368563, //pressure on the key on release doesn't work on my phone :/
+      "XOnRelease": 476, // <= finger position X on the key when it's Release
+      "YOnRelease": 116, // <= finger position Y on the key when it's Release
+      /*
+        Stacks of Acceleration data on release.
+        The firt data (-0.7127 for x, -1.2286 for y and -0.2183 for z 0.8505) is the value when the key is release,
+        the other values precede the first value and are ordered (First value is the most recent one, following by the second, etc....).
+      */
+      "LinearAccelerationOnRelease": {
+        "x": [
+          -1.2286,
+          -1.3878,
+          -2.1208,
+          -0.96489996,
+          -0.0998,
+          -0.20899999
+        ],
+        "y": [
+          -0.2183,
+          -0.6615,
+          0.43069997,
+          0.7258,
+          -0.0301,
+          -0.0602
+        ],
+        "z": [
+          0.8505,
+          0.38189998,
+          -2.2814999,
+          -2.7373998,
+          -0.15169999,
+          0.18879999
+        ]
+      },
+      // The same for RotationVectore data (gyroscope).
+      "RotationVectorOnRelease": {
+        "x": [
+          0.073062,
+          -0.069814,
+          -0.052331,
+          -0.045058,
+          -0.049157,
+          -0.05646
+        ],
+        "y": [
+          0.262515,
+          -0.265517,
+          -0.27545398,
+          -0.279923,
+          -0.284323,
+          -0.282726
+        ],
+        "z": [
+          0.962156,
+          -0.961546,
+          -0.959802,
+          -0.958627,
+          -0.957084,
+          -0.957022
+        ]
+      },
+      // compute with the XOnRelease, YOnRelease, XOnPress, YOnPress. Are not always null mostly when an user use one finger
+      "vectorCoord": "X=0;Y=0"
+    }
+  ]
+}
