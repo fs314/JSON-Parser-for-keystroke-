@@ -11,11 +11,7 @@ import java.util.*;
 
 public class ReadKSFile {
 
-	public static void main(String[] args) 
-	{		
-		String fileName = "1462669319kspattern.json";   //ADD CODE SO THAT FILE CAN BE INPUT MANUALLY ON CONSOLE + ASKS FOR HOW TO RENAME FILE. 
-		JSONObject jsonObject = parseObj(fileName);			
-	}
+	public static void main(String[] args) {}
 	
 	
 	//SEEMS NOT NEEDED

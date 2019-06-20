@@ -1,5 +1,5 @@
 
-public enum Flags {
+public enum Flags { //need to change with new flags
 GDYESVD,
 GDYESVB,
 GDYESVI,
