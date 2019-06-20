@@ -11,7 +11,7 @@ public class WriteJSON {
 	
 	public static void main(String[] args) throws FileNotFoundException  
     { 
-		String fileName = "-412481395kspattern.json";         //Want program to iterate over files in directory and parse them one by one. 
+		String fileName = "1462669319kspattern.json";         //Want program to iterate over files in directory and parse them one by one. 
 		JSONObject jsonObject = ReadKSFile.parseObj(fileName);
 		
 	    JSONObject newJo = new JSONObject();            //JSONObject containing all the participant's data 
