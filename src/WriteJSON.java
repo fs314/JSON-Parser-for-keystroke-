@@ -28,15 +28,15 @@ public class WriteJSON {
 	    {
 	    	JSONArray ks = new JSONArray();             //Create a JSONArray ks for every condition. Contains a JSONObject for each keystroke associated to that condition.
 	    	
-	    	for(int a=0; a< mp.get(conditionsFound.get(1)).size(); a++)  //TEMP CHANGE FROM get(i) TO get(1)
+	    	for(int a=0; a< mp.get(conditionsFound.get(i)).size(); a++)  //TEMP CHANGE FROM get(i) TO get(1)
 	    	{
-	    		JSONObject jo1 = mp.get(conditionsFound.get(1)).get(a);  //iterate over array of JSONObjects associated to every condition (as split by SplitCondition.fromCondition)
+	    		JSONObject jo1 = mp.get(conditionsFound.get(i)).get(a);  //iterate over array of JSONObjects associated to every condition (as split by SplitCondition.fromCondition)
 	    		ks.add(jo1);                                            
 	    	}
 	    	newJo.put(conditionsFound.get(i), ks);                       //Add JSONArray ks to JSONObject newJo
 	    }
 	    
-        PrintWriter pw = new PrintWriter("newJSON/JSONExample.json");   	 // writing JSON to file:"JSONExample.json" in cwd 
+        PrintWriter pw = new PrintWriter("JSONExample.json");   	 // writing JSON to file:"JSONExample.json" in cwd 
         pw.write(newJo.toJSONString()); 
           
         pw.flush(); 

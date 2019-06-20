@@ -32,7 +32,7 @@ public class SplitCondition {
 			ArrayList<JSONObject> conditionedKsData = new ArrayList<JSONObject>();
 			
 			String conditionName = "condition" + i;
-			for (int index= conditionDelimiter(jsonObject).get("startIndex").get(i); index<conditionDelimiter(jsonObject).get("endIndex").get(i); index++) 
+			for (int index= conditionDelimiter(jsonObject).get("startIndex").get(1); index<conditionDelimiter(jsonObject).get("endIndex").get(1); index++) //get.(i) 
 			{
 				//value of conditionedKsData represents all the elements in ksData that go from startIndex(i) at endIndex(i), via .get(i). 
 				conditionedKsData.add(ksData.get(index));
