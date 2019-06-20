@@ -1,11 +1,11 @@
 
-public enum Flags { //need to change with new flags
+public enum Flags { 
 GDYESVD,
-GDYESVB,
-GDYESVI,
-GDYESHB,
-GDYEWVD,
-GDYEWVB,
-GDYEWVI,
-GDYEWHB
+UTRBWVD,
+TRYGSVX,
+HTRGWVX,
+BVOYSVI,
+ZXGHWVI,
+FGSWSHB,
+PDJTWHB,
 }
