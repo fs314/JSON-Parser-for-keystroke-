@@ -167,7 +167,7 @@ public class SplitCondition {
 	
 	/**
 	 * extracts an array of primary codes (ascii) from JSON file and converts it into a string 
-	 * @param original JSON file from which to extract the searchString
+	 * @param JSONObject original JSONObject containing all keystroke data
 	 * @return String searchString
 	 * **/
 	public static String getSearchString(JSONObject jsonObject) 

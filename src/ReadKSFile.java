@@ -104,7 +104,7 @@ public class ReadKSFile {
 	/**
      * loops over the first layer of keystroke array extracting all JSONObject related to one keystroke 
      * and organizing them all together into an ArrayList
-     * @param the list of initial JSONArray found in the JSON file to parse
+     * @param JSONObject original JSONObject containing all keystroke data
      * @return ArrayList of JSONObjects related to each keystroke
      * **/
    	public static ArrayList<JSONObject> extractKsData(JSONObject jsonObject)  
@@ -128,8 +128,8 @@ public class ReadKSFile {
    	}
     
    	/**
-     * . 
-     * @param the JSON file from which to extract the Keystroke data
+     * retrieves JSONArrays in the original JSONObject and organises them into an ArrayList
+     * @param JSONObject original JSONObject containing all keystroke data
      * @return ArrayList of first layer of JSONArray in Keystroke data file
      * **/
     public static ArrayList<JSONArray> getKsArray(JSONObject jsonObject) 
@@ -146,8 +146,8 @@ public class ReadKSFile {
     
     /**
      * loops over first layer of arrays in the JSON file and extracts their label. 
-     * @param the initial JSON file 
-     * @return ArrayList of labels 
+     * @param JSONObject original JSONObject containing all keystroke data
+     * @return ArrayList of keystroke labels 
      * **/
   	public static ArrayList<String> extractKsLabel(JSONObject jsonObject)                          
   	{
