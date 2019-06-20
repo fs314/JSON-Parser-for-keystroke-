@@ -11,7 +11,7 @@ public class WriteJSON {
 	
 	public static void main(String[] args) throws FileNotFoundException  
     { 
-		String fileName = "1462669319kspattern.json";
+		String fileName = "1462669319kspattern.json";         //Want program to iterate over files in directory and parse them one by one. 
 		JSONObject jsonObject = ReadKSFile.parseObj(fileName);
 		
 	    JSONObject newJo = new JSONObject();            //JSONObject containing all the participant's data 
@@ -28,7 +28,7 @@ public class WriteJSON {
 	    {
 	    	JSONArray ks = new JSONArray();             //Create a JSONArray ks for every condition. Contains a JSONObject for each keystroke associated to that condition.
 	    	
-	    	for(int a=0; a< mp.get(conditionsFound.get(i)).size(); a++)  //TEMP CHANGE FROM get(i) TO get(1)
+	    	for(int a=0; a< mp.get(conditionsFound.get(i)).size(); a++) 
 	    	{
 	    		JSONObject jo1 = mp.get(conditionsFound.get(i)).get(a);  //iterate over array of JSONObjects associated to every condition (as split by SplitCondition.fromCondition)
 	    		ks.add(jo1);                                            
@@ -36,7 +36,7 @@ public class WriteJSON {
 	    	newJo.put(conditionsFound.get(i), ks);                       //Add JSONArray ks to JSONObject newJo
 	    }
 	    
-        PrintWriter pw = new PrintWriter("newJSON/JSONExample.json");   	 // writing JSON to file:"JSONExample.json" in cwd 
+        PrintWriter pw = new PrintWriter("newJSON/JSONExample1.json");   	 // writing JSON to file:"JSONExample.json" in another folder in cwd 
         pw.write(newJo.toJSONString()); 
           
         pw.flush(); 

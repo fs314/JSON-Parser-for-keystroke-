@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.*; 
@@ -25,14 +23,14 @@ public class SplitCondition {
 	{
 		LinkedHashMap<String, ArrayList<JSONObject>> conditions = new LinkedHashMap<String, ArrayList<JSONObject>>(8); 
 		
-		ArrayList<JSONObject> ksData = ReadKSFile.extractKsData(ReadKSFile.getKsArray(jsonObject));
+		ArrayList<JSONObject> ksData = ReadKSFile.extractKsData(jsonObject); 
 		
 		for (int i=0; i<conditionDelimiter(jsonObject).get("startIndex").size(); i++)                
 		{
 			ArrayList<JSONObject> conditionedKsData = new ArrayList<JSONObject>();
 			
 			String conditionName = "condition" + i;
-			for (int index= conditionDelimiter(jsonObject).get("startIndex").get(1); index<conditionDelimiter(jsonObject).get("endIndex").get(1); index++) //get.(i) 
+			for (int index= conditionDelimiter(jsonObject).get("startIndex").get(i); index<conditionDelimiter(jsonObject).get("endIndex").get(i); index++)
 			{
 				//value of conditionedKsData represents all the elements in ksData that go from startIndex(i) at endIndex(i), via .get(i). 
 				conditionedKsData.add(ksData.get(index));
@@ -174,7 +172,7 @@ public class SplitCondition {
 	 * **/
 	public static String getSearchString(JSONObject jsonObject) 
 	{
-		ArrayList<JSONObject> ksDataList = ReadKSFile.extractKsData(ReadKSFile.getKsArray(jsonObject));
+		ArrayList<JSONObject> ksDataList = ReadKSFile.extractKsData(jsonObject); //ReadKSFile.extractKsData(ReadKSFile.getKsArray(jsonObject));
 		
 		ArrayList<Long> letterCodes = ReadKSFile.getLetterCodes(ksDataList); 
 		String searchString = intoString(pCodeConverter(letterCodes));
