@@ -15,7 +15,6 @@ public class SplitCondition {
 	 * @return LinkedHashMap<String, ArrayList<JSONObject>> where the String represents the condition name 
 	 * and the ArrayList<JSONObject> all the JSONObject of each keystroke associated to that condition
 	 * **/
-	
 	public static LinkedHashMap<String, ArrayList<JSONObject>> fromCondition(JSONObject jsonObject) 
 	{
 		LinkedHashMap<String, ArrayList<JSONObject>> conditions = new LinkedHashMap<String, ArrayList<JSONObject>>(8); 
@@ -47,6 +46,7 @@ public class SplitCondition {
 	public static LinkedHashMap<String, ArrayList<Integer>> conditionDelimiter (JSONObject jsonObject) 
 	{
 		LinkedHashMap<String, ArrayList<Integer>> startToEnd = new LinkedHashMap<String, ArrayList<Integer>>();
+		
 		ArrayList<Integer> startIndex = new ArrayList<Integer>();
 		ArrayList<Integer> endIndex = new ArrayList<Integer>();
 		
@@ -62,7 +62,6 @@ public class SplitCondition {
 				endIndex.add(getSearchString(jsonObject).length() - 1);
 			}
 		}
-		
 		startToEnd.put("startIndex", startIndex);
 		startToEnd.put("endIndex", endIndex);
 		return startToEnd;
@@ -99,6 +98,7 @@ public class SplitCondition {
 	{
 	  ArrayList<String> flags = flagsArray();
 	  ArrayList<String> conditionString = new ArrayList<String>();
+	 
 	  int endIndex = 0;
 	  int startIndex = 0;
 	  
@@ -111,10 +111,8 @@ public class SplitCondition {
 		} else {
 			endIndex = searchString.length() - 1;
 		}
-		
 		conditionString.add(searchString.substring(startIndex, endIndex));
 	  }
-	  
 	  return conditionString;
 	}
 	
@@ -133,7 +131,6 @@ public class SplitCondition {
 	{
 		  flagIndexes.add(m.start());
 	}
-
 	int minIndex = flagIndexes.get(flagIndexes.indexOf(Collections.min(flagIndexes)));
 	return minIndex;
 	}
@@ -156,8 +153,8 @@ public class SplitCondition {
 	  
 	  int minIndex = flagIndexes.get(flagIndexes.indexOf(Collections.min(flagIndexes)));
 	  int maxIndex = flagIndexes.get(flagIndexes.indexOf(Collections.max(flagIndexes)));
+	 
 	  String conditionString = searchString.substring(minIndex, maxIndex);
-	  
 	  return conditionString;
 	}
 	
@@ -169,11 +166,10 @@ public class SplitCondition {
 	 * **/
 	public static String getSearchString(JSONObject jsonObject) 
 	{
-		ArrayList<JSONObject> ksDataList = ReadKSFile.extractKsData(jsonObject); //ReadKSFile.extractKsData(ReadKSFile.getKsArray(jsonObject));
+		ArrayList<JSONObject> ksDataList = ReadKSFile.extractKsData(jsonObject); 
 		
 		ArrayList<Long> letterCodes = ReadKSFile.getLetterCodes(ksDataList); 
 		String searchString = intoString(pCodeConverter(letterCodes));
-		
 		return searchString;
 	}
 	
@@ -199,7 +195,7 @@ public class SplitCondition {
 	 * @param ArrayList<long> containing all the primary codes (ascii) of each keystroke 
 	 * @return ArrayList<String> containing all the letters translated from ascii 
 	 * **/
-	public static ArrayList<String> pCodeConverter(ArrayList<Long> letterCodes)  //Converts arrayList of primaryCodes into string and prints it one by one
+	public static ArrayList<String> pCodeConverter(ArrayList<Long> letterCodes)  
 	{	
 	ArrayList<String> fromAscii = new ArrayList<String>();
 	for (int i=0; i<letterCodes.size(); i++) 
