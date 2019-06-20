@@ -36,7 +36,7 @@ public class WriteJSON {
 	    	newJo.put(conditionsFound.get(i), ks);                       //Add JSONArray ks to JSONObject newJo
 	    }
 	    
-        PrintWriter pw = new PrintWriter("JSONExample.json");   	 // writing JSON to file:"JSONExample.json" in cwd 
+        PrintWriter pw = new PrintWriter("newJSON/JSONExample.json");   	 // writing JSON to file:"JSONExample.json" in cwd 
         pw.write(newJo.toJSONString()); 
           
         pw.flush(); 
