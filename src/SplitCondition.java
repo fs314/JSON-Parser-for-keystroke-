@@ -213,6 +213,25 @@ public class SplitCondition {
 	
 	
 	/**
+	 * finds how many times a given flag occurs in a given search string
+	 * @param String for the string to be searched and String for the flag to look for
+	 * @return int for the number of times the flag was found in the search string
+	 * **/
+	public int flagsOccurence(String searchString, String currFlag) 
+	{
+		int occurences=0;
+		
+		Matcher m = Pattern.compile(currFlag, Pattern.CASE_INSENSITIVE).matcher(searchString);
+		while (m.find()) 
+		{
+			occurences++;
+		}
+		 
+		return occurences;
+	}
+	
+	
+	/**
 	 * extracts an array of primary codes (ascii) from JSON file and converts it into a string 
 	 * @param JSONObject original JSONObject containing all keystroke data
 	 * @return String searchString

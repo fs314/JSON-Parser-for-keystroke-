@@ -19,9 +19,14 @@ public class Tests
 	public static void main(String[] args) 
 	{
 		Tests ts = new Tests();
+		
+		/**
 		ts.testminIndexDelimiter();
 		System.out.println("___________________________________" );
 		ts.testflagDelimiter();
+		**/
+		
+		ts.testflagOccurence(); 
 	}
 	
 	public void testFlagMinIndex() 
@@ -71,6 +76,19 @@ public class Tests
 			System.out.println(" ");
 			System.out.println(sp.flagDelimiter(sp.getSearchString(jsonObject)).get(i));
 		}
+	}
+	
+	public void testflagOccurence() 
+	{
+		JSONObject jsonObject = rKSF.parseObj("-412481395kspattern.json");
+		
+		for (int i=0; i< sp. flagsArray().size(); i++) 
+		{
+			System.out.println(sp.flagsArray().get(i));	
+			System.out.println(sp.flagsOccurence(sp.getSearchString(jsonObject), sp.flagsArray().get(i)));
+			System.out.println(" ");	
+		}
+	
 	}
 	   
 }
