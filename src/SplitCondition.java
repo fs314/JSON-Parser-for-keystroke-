@@ -125,13 +125,28 @@ public class SplitCondition {
 	public static int flagMinIndex(String searchString, String currFlag) 
 	{
 	ArrayList<Integer> flagIndexes = new ArrayList<Integer>();
-
+	int minIndex=0;
+	
 	Matcher m = Pattern.compile(currFlag.toString(), Pattern.CASE_INSENSITIVE).matcher(searchString);
 	while (m.find()) 
 	{
-		  flagIndexes.add(m.start());
+		flagIndexes.add(m.start());
 	}
-	int minIndex = flagIndexes.get(flagIndexes.indexOf(Collections.min(flagIndexes)));
+	
+	for (int i=0; i<flagIndexes.size(); i++)  //loops over array of indexes for given flag to find minimum index or start index
+	{
+		int currIndex = flagIndexes.get(i);
+		
+		if(i==0) 
+		{
+			minIndex = flagIndexes.get(i);
+		} else if (currIndex < minIndex) {
+			minIndex =currIndex;
+		}
+	}
+	
+	//minIndex = flagIndexes.get(flagIndexes.indexOf(Collections.min(flagIndexes))); Collections.min throws error java.util.NoSuchElementException
+
 	return minIndex;
 	}
 	
