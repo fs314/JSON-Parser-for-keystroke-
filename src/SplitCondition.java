@@ -103,7 +103,7 @@ public class SplitCondition {
 	 * @param String for the string to be searched 
 	 * @return ArrayList<String> containing all the newly obtained substrings
 	 * **/
-	public ArrayList<String> minIndexDelimiter (String searchString) 
+	public ArrayList<String> minIndexDelimiter (String searchString) //NOT IDEAL AFTER CHANGING THE METHODOLOGY FOR SPLITTING CONDITIONS
 	{
 	  ArrayList<String> flags = flagsArray();
 	  ArrayList<String> conditionString = new ArrayList<String>();
