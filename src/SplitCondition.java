@@ -7,10 +7,15 @@ public class SplitCondition {
 
 	ReadKSFile rKSF;
 	
+	/**
+	 * class constructor
+	 * **/
 	public SplitCondition() 
 	{
 		 rKSF = new ReadKSFile ();
 	}
+	
+	
 	public static void main(String[] args) {}
 	
 	
