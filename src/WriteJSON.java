@@ -7,16 +7,32 @@ import org.json.simple.JSONObject;
 
 public class WriteJSON {
 	
+	ReadKSFile rKSF;
+	SplitCondition sp;
 	
+	/**
+	 * class constructor
+	 * **/
+	public WriteJSON() 
+	{
+		 rKSF = new ReadKSFile();
+		 sp = new SplitCondition();
+	}
 	
 	public static void main(String[] args) throws FileNotFoundException  
     { 
+		WriteJSON wJS = new WriteJSON ();
+		wJS.createKSFile();
+    }
+	
+	public void createKSFile () throws FileNotFoundException
+	{
 		String fileName = "1462669319kspattern.json";         //Want program to iterate over files in directory and parse them one by one. 
-		JSONObject jsonObject = ReadKSFile.parseObj(fileName);
+		JSONObject jsonObject = rKSF.parseObj(fileName);
 		
 	    JSONObject newJo = new JSONObject();            //JSONObject containing all the participant's data 
 	    
-	    LinkedHashMap<String, ArrayList<JSONObject>> mp = SplitCondition.fromCondition(jsonObject);
+	    LinkedHashMap<String, ArrayList<JSONObject>> mp = sp.fromCondition(jsonObject);
 	    ArrayList<String> conditionsFound = new ArrayList<String>();
 	    
 	    for(Map.Entry<String, ArrayList<JSONObject>> entry : mp.entrySet()) 
@@ -41,8 +57,6 @@ public class WriteJSON {
           
         pw.flush(); 
         pw.close(); 
-      
-    
-    }
+	}
 
 }

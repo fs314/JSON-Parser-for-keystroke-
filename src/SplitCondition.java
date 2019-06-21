@@ -5,6 +5,12 @@ import org.json.simple.JSONObject;
 
 public class SplitCondition {
 
+	ReadKSFile rKSF;
+	
+	public SplitCondition() 
+	{
+		 rKSF = new ReadKSFile ();
+	}
 	public static void main(String[] args) {}
 	
 	
@@ -15,11 +21,11 @@ public class SplitCondition {
 	 * @return LinkedHashMap<String, ArrayList<JSONObject>> where the String represents the condition name 
 	 * and the ArrayList<JSONObject> all the JSONObject of each keystroke associated to that condition
 	 * **/
-	public static LinkedHashMap<String, ArrayList<JSONObject>> fromCondition(JSONObject jsonObject) 
+	public LinkedHashMap<String, ArrayList<JSONObject>> fromCondition(JSONObject jsonObject) 
 	{
 		LinkedHashMap<String, ArrayList<JSONObject>> conditions = new LinkedHashMap<String, ArrayList<JSONObject>>(8); 
 		
-		ArrayList<JSONObject> ksData = ReadKSFile.extractKsData(jsonObject); 
+		ArrayList<JSONObject> ksData =  rKSF.extractKsData(jsonObject); 
 		
 		for (int i=0; i<conditionDelimiter(jsonObject).get("startIndex").size(); i++)                
 		{
@@ -43,7 +49,7 @@ public class SplitCondition {
 	 * @return HashMap<String, ArrayList<Integer>> containing two separate lists of indexes, 
 	 * one for the start index of each condition string and one for the end index of each condition string
 	 * **/
-	public static LinkedHashMap<String, ArrayList<Integer>> conditionDelimiter (JSONObject jsonObject) 
+	public LinkedHashMap<String, ArrayList<Integer>> conditionDelimiter (JSONObject jsonObject) 
 	{
 		LinkedHashMap<String, ArrayList<Integer>> startToEnd = new LinkedHashMap<String, ArrayList<Integer>>();
 		
@@ -74,7 +80,7 @@ public class SplitCondition {
 	 * @param  JSONObject original JSONObject containing all keystroke data
 	 * @return ArrayList<Integer> containing the minimum index of occurrence of each condition string
 	 * **/
-	public static ArrayList<Integer> indexByCondition(JSONObject jsonObject) 
+	public ArrayList<Integer> indexByCondition(JSONObject jsonObject) 
 	{
 		ArrayList<Integer> splitAt= new ArrayList<Integer>();
 		
@@ -94,7 +100,7 @@ public class SplitCondition {
 	 * @param String for the string to be searched 
 	 * @return ArrayList<String> containing all the newly obtained substrings
 	 * **/
-	public static ArrayList<String> minIndexDelimiter (String searchString) 
+	public ArrayList<String> minIndexDelimiter (String searchString) 
 	{
 	  ArrayList<String> flags = flagsArray();
 	  ArrayList<String> conditionString = new ArrayList<String>();
@@ -122,7 +128,7 @@ public class SplitCondition {
 	 * @param String for the string to be searched and String for the current flag to look for 
 	 * @return int minimum index at which the flag is found within the given string
 	 * **/
-	public static int flagMinIndex(String searchString, String currFlag) 
+	public int flagMinIndex(String searchString, String currFlag) 
 	{
 	ArrayList<Integer> flagIndexes = new ArrayList<Integer>();
 	int minIndex=0;
@@ -155,7 +161,7 @@ public class SplitCondition {
 	 * @param String for the string to be searched and String for the flag to look for
 	 * @return String substring of original input string as delimited by a given flag
 	 * **/
-	public static String flagDelimiter(String searchString, String currFlag)       //NOT CURRENTLY USED
+	public String flagDelimiter(String searchString, String currFlag)       //NOT CURRENTLY USED
 	{
 	  ArrayList<Integer> flagIndexes = new ArrayList<Integer>();
 	  
@@ -179,11 +185,11 @@ public class SplitCondition {
 	 * @param JSONObject original JSONObject containing all keystroke data
 	 * @return String searchString
 	 * **/
-	public static String getSearchString(JSONObject jsonObject) 
+	public String getSearchString(JSONObject jsonObject) 
 	{
-		ArrayList<JSONObject> ksDataList = ReadKSFile.extractKsData(jsonObject); 
+		ArrayList<JSONObject> ksDataList =  rKSF.extractKsData(jsonObject); 
 		
-		ArrayList<Long> letterCodes = ReadKSFile.getLetterCodes(ksDataList); 
+		ArrayList<Long> letterCodes =  rKSF.getLetterCodes(ksDataList); 
 		String searchString = intoString(pCodeConverter(letterCodes));
 		return searchString;
 	}
@@ -194,7 +200,7 @@ public class SplitCondition {
 	 * @param ArrayList<String> containing a series of letters
 	 * @return String obtained from an array of letters
 	 * **/
-	public static String intoString(ArrayList<String> fromAscii) 
+	public String intoString(ArrayList<String> fromAscii) 
 	{
 		StringBuilder finalStr = new StringBuilder();
 		for (int i=0; i< fromAscii.size(); i++) 
@@ -210,7 +216,7 @@ public class SplitCondition {
 	 * @param ArrayList<long> containing all the primary codes (ascii) of each keystroke 
 	 * @return ArrayList<String> containing all the letters translated from ascii 
 	 * **/
-	public static ArrayList<String> pCodeConverter(ArrayList<Long> letterCodes)  
+	public ArrayList<String> pCodeConverter(ArrayList<Long> letterCodes)  
 	{	
 	ArrayList<String> fromAscii = new ArrayList<String>();
 	for (int i=0; i<letterCodes.size(); i++) 
@@ -227,7 +233,7 @@ public class SplitCondition {
 	 * gets an ArrayList of the Flags of type ENUM
 	 * @return ArrayList<String> containing the name of the flags
 	 * **/
-	public static ArrayList<String> flagsArray() 
+	public ArrayList<String> flagsArray() 
 	{
 		ArrayList<String> flags = new ArrayList<String>();
 		
