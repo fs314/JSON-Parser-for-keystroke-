@@ -25,6 +25,10 @@ public class WriteJSON {
 		wJS.createKSFile();
     }
 	
+	/**
+	 * creates a new JSON file where keystroke data is divided by condition. 
+	 * Original keystroke label is preserved as a JSONObject within new main JSON file. 
+	 * **/
 	public void createKSFile () throws FileNotFoundException
 	{
 		String fileName = "1462669319kspattern.json";         //Want program to iterate over files in directory and parse them one by one. 
