@@ -18,8 +18,6 @@ public class SplitCondition {
 	
 	public static void main(String[] args) {}
 	
-	
-	
 	/**
 	 * Parses original input JSONObject and splits all the keystroke data according to the condition they are generated in. 
 	 * @param  JSONObject original JSONObject containing all keystroke data
@@ -36,7 +34,7 @@ public class SplitCondition {
 		{
 			ArrayList<JSONObject> conditionedKsData = new ArrayList<JSONObject>();
 			
-			String conditionName = "condition" + i;
+			String conditionName = "condition" + i;   //GIVE MORE DESCRIPTIVE NAME TO CONDITION e.g. use FLAG INSTEAD
 			for (int index= conditionDelimiter(jsonObject).get("startIndex").get(i); index<conditionDelimiter(jsonObject).get("endIndex").get(i); index++)
 			{
 				//value of conditionedKsData represents all the elements in ksData that go from startIndex(i) at endIndex(i), via .get(i). 
@@ -90,7 +88,7 @@ public class SplitCondition {
 		ArrayList<Integer> splitAt= new ArrayList<Integer>();
 		
 		String data = getSearchString(jsonObject);
-		for(int i=0; i < minIndexDelimiter(data).size(); i++) 
+		for(int i=0; i < minIndexDelimiter(data).size(); i++) //for(int i=0; i < minIndexDelimiter(data).size(); i++)
 		{
 			splitAt.add(flagMinIndex(data, minIndexDelimiter(data).get(i)));
 		}
@@ -122,7 +120,13 @@ public class SplitCondition {
 		} else {
 			endIndex = searchString.length() - 1;
 		}
-		conditionString.add(searchString.substring(startIndex, endIndex));
+		 
+		if (endIndex > startIndex)  //checks that indexes are valid
+		{
+			conditionString.add(searchString.substring(startIndex, endIndex));
+		} else if (endIndex < startIndex) {
+			conditionString.add(startIndex + " " + endIndex + "NULL");     //TESTING 
+		}
 	  }
 	  return conditionString;
 	}
@@ -135,52 +139,75 @@ public class SplitCondition {
 	 * **/
 	public int flagMinIndex(String searchString, String currFlag) 
 	{
-	ArrayList<Integer> flagIndexes = new ArrayList<Integer>();
-	int minIndex=0;
-	
-	Matcher m = Pattern.compile(currFlag.toString(), Pattern.CASE_INSENSITIVE).matcher(searchString);
-	while (m.find()) 
-	{
-		flagIndexes.add(m.start());
-	}
-	
-	for (int i=0; i<flagIndexes.size(); i++)  //loops over array of indexes for given flag to find minimum index or start index
-	{
-		int currIndex = flagIndexes.get(i);
+		ArrayList<Integer> flagIndexes = new ArrayList<Integer>();
+		int minIndex=0;
 		
-		if(i==0) 
+		Matcher m = Pattern.compile(currFlag.toString(), Pattern.CASE_INSENSITIVE).matcher(searchString);
+		while (m.find()) 
 		{
-			minIndex = flagIndexes.get(i);
-		} else if (currIndex < minIndex) {
-			minIndex =currIndex;
-		}
-	}
-	
-	//minIndex = flagIndexes.get(flagIndexes.indexOf(Collections.min(flagIndexes))); Collections.min throws error java.util.NoSuchElementException
-
+			flagIndexes.add(m.start());
+			}
+		for (int i=0; i<flagIndexes.size(); i++)  //loops over array of indexes for given flag to find minimum index of flag or start index of condition
+		{
+			int currIndex = flagIndexes.get(i);
+			if(i==0) 
+			{
+				minIndex = flagIndexes.get(i);
+			} else if (currIndex < minIndex) {
+					minIndex =currIndex;
+			}
+	     }
 	return minIndex;
 	}
+	
+	/**
+	 * finds the maximum index at which a given flag occurs within the searchString
+	 * @param String for the string to be searched and String for the current flag to look for 
+	 * @return int minimum index at which the flag is found within the given string
+	 * **/
+	public int flagMaxIndex(String searchString, String currFlag) 
+	{
+		ArrayList<Integer> flagIndexes = new ArrayList<Integer>();
+		int maxIndex=0;
+		
+		Matcher m = Pattern.compile(currFlag.toString(), Pattern.CASE_INSENSITIVE).matcher(searchString);
+		while (m.find()) 
+		{
+			flagIndexes.add(m.end());
+		}
+		
+		for (int i=0; i<flagIndexes.size(); i++)  //loops over array of indexes for given flag to find maximum index of flag or end index of condition
+		{
+			int currIndex = flagIndexes.get(i);
+			if(i==0) 
+			{
+				maxIndex = flagIndexes.get(i);
+			} else if (currIndex > maxIndex) {
+					maxIndex =currIndex;
+			}
+	     }
+	return maxIndex;	
+	}
+	
 	
 	/**
 	 * splits original input string into a substring starting and ending with the same input flag (inclusive).
 	 * @param String for the string to be searched and String for the flag to look for
 	 * @return String substring of original input string as delimited by a given flag
 	 * **/
-	public String flagDelimiter(String searchString, String currFlag)       //NOT CURRENTLY USED
+	public ArrayList<String> flagDelimiter(String searchString)       //NOT CURRENTLY USED
 	{
-	  ArrayList<Integer> flagIndexes = new ArrayList<Integer>();
-	  
-	  Matcher m = Pattern.compile(currFlag, Pattern.CASE_INSENSITIVE).matcher(searchString);
-	  while (m.find()) 
-	    {
-		  flagIndexes.add(m.start());
-		  flagIndexes.add(m.end());
-	    }
-	  
-	  int minIndex = flagIndexes.get(flagIndexes.indexOf(Collections.min(flagIndexes)));
-	  int maxIndex = flagIndexes.get(flagIndexes.indexOf(Collections.max(flagIndexes)));
+	  ArrayList<String> conditionString = new ArrayList<String>();
+	  ArrayList<String> flags = flagsArray();
 	 
-	  String conditionString = searchString.substring(minIndex, maxIndex);
+	  for (int i=0; i<flags.size(); i++) 
+	  {
+		  int maxIndex = flagMaxIndex(searchString, flags.get(i));
+		  int minIndex =flagMinIndex(searchString, flags.get(i));
+		  
+	      String delimitString = searchString.substring(minIndex, maxIndex);
+	      conditionString.add(delimitString);
+	  }
 	  return conditionString;
 	}
 	

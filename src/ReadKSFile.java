@@ -71,7 +71,7 @@ public class ReadKSFile {
     * @param JSONObject corresponding to one keystroke
     * @return Long primaryCode value
     * **/
-	public Long extractPrimaryCode(JSONObject jo1)                      
+	public Long  extractPrimaryCode(JSONObject jo1)                      
     {  
     	Long primaryCode = (Long) jo1.get("primaryCode"); 
     	return primaryCode;	

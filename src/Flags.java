@@ -1,7 +1,7 @@
 
 public enum Flags { 
 
-GDYESVD,
+/**GDYESVD,
 GDYESVB,
 GDYESVI,
 GDYESHB,
@@ -9,10 +9,10 @@ GDYEWVD,
 GDYEWVB,
 GDYEWVI,
 GDYEWHB,
+**/
 
 
 
-/** NEW FLAGS
 GDYESVD,
 UTRBWVD,
 TRYGSVX,
@@ -21,5 +21,5 @@ BVOYSVI,
 ZXGHWVI,
 FGSWSHB,
 PDJTWHB
-**/
+
 }
