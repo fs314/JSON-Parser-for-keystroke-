@@ -1,5 +1,7 @@
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.io.*; 
+import java.io.FileNotFoundException;
+
 import java.util.*; 
 import org.json.simple.JSONArray; 
 import org.json.simple.JSONObject;
@@ -31,36 +33,69 @@ public class WriteJSON {
 	 * **/
 	public void createKSFile () throws FileNotFoundException
 	{
-		String fileName = "-412481395kspattern.json";   //Want program to iterate over files in directory and parse them one by one. 
-		JSONObject jsonObject = rKSF.parseObj(fileName);
-		
-	    JSONObject newJo = new JSONObject();            //JSONObject containing all the participant's data 
-	    
-	    LinkedHashMap<String, ArrayList<JSONObject>> mp = sp.fromCondition(jsonObject);
-	    ArrayList<String> conditionsFound = new ArrayList<String>();
-	    
-	    for(Map.Entry<String, ArrayList<JSONObject>> entry : mp.entrySet()) 
-	    {
-	    	conditionsFound.add(entry.getKey());
-	    }
-	    
-	    for(int i=0; i<conditionsFound.size(); i++) 
-	    {
-	    	JSONArray ks = new JSONArray();             //Create a JSONArray ks for every condition. Contains a JSONObject for each keystroke associated to that condition.
+		JSONObject newJo = new JSONObject();  //
+		JSONObject jsonObject = new JSONObject(); //file to be parsed
+		String newFilename = "";
+		 
+		for (int i=0; i<filesForFolder().size(); i++) 
+		{
+			jsonObject = rKSF.parseObj(filesForFolder().get(i));
+			newFilename = "s"+ i;
+			
+			ArrayList<String> conditionsFound = new ArrayList<String>();
+			LinkedHashMap<String, ArrayList<JSONObject>> mp = sp.fromCondition(jsonObject);
+			for(Map.Entry<String, ArrayList<JSONObject>> entry : mp.entrySet()) 
+			{
+				conditionsFound.add(entry.getKey());
+			}
+			
+			for(int b=0; b<conditionsFound.size(); b++) 
+			{
+				//Create a JSONArray ks for every condition. Contains a JSONObject for each keystroke associated to that condition.
+				JSONArray ks = new JSONArray();            
 	    	
-	    	for(int a=0; a< mp.get(conditionsFound.get(i)).size(); a++) 
-	    	{
-	    		JSONObject jo1 = mp.get(conditionsFound.get(i)).get(a);  //iterate over array of JSONObjects associated to every condition (as split by SplitCondition.fromCondition)
-	    		ks.add(jo1);                                            
-	    	}
-	    	newJo.put(conditionsFound.get(i), ks);                       //Add JSONArray ks to JSONObject newJo
+	    	    for(int a=0; a< mp.get(conditionsFound.get(b)).size(); a++) 
+	    	    {
+	    	    	//iterate over array of JSONObjects associated to every condition (as split by SplitCondition.fromCondition)
+	    		    JSONObject jo1 = mp.get(conditionsFound.get(b)).get(a);  
+	    		    ks.add(jo1);                                            
+	    	    }
+	    	//Add JSONArray ks to JSONObject newJo
+	    	newJo.put(conditionsFound.get(b), ks);                      
+	        }
+			
+			printParsedFiles(newFilename, newJo); 
 	    }
-	    
-        PrintWriter pw = new PrintWriter("newJSON/JSONEx2.json");   	 // writing JSON to file:"JSONExample.json" in another folder in cwd 
-        pw.write(newJo.toJSONString()); 
-          
-        pw.flush(); 
-        pw.close(); 
 	}
+	
+	
+	
+	public ArrayList<String> filesForFolder() 
+	{
+		ArrayList<String> filename = new ArrayList<String>();
+		
+		File folder = new File("X:\\home\\Eclipse - workspace\\OriginalKSFiles");
+	    File [] listOfFiles = folder.listFiles();
+	    
+	    for (File file : listOfFiles) 
+	    {
+	    	if (file.isFile()) 
+	    	{
+	    		filename.add(file.getName().toString());
+	    	}
+	    }
+	    return filename;
+	} 
+	
+	public void printParsedFiles(String newFilename, JSONObject newJo) throws FileNotFoundException  
+	{
+		  String newPath = ("X:\\home\\Eclipse - workspace\\ParsedKSFiles\\" + newFilename + ".json");	  
+		  PrintWriter pw = new PrintWriter(newPath);  
+		  pw.write(newJo.toJSONString()); 
+	          
+	        pw.flush(); 
+	        pw.close();
+	}
+	
 
 }

@@ -63,6 +63,7 @@ public class SplitCondition {
 		int minIndex = flagMinIndex(searchString, currFlag);
 		
 		String conditionString = searchString.substring(minIndex, maxIndex);
+	
 		return conditionString;
 	}
 	

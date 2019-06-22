@@ -6,6 +6,7 @@ public class Tests
 {
 	ReadKSFile rKSF;
 	SplitCondition sp;
+	WriteJSON wjs;
 	
 	/**
 	 * class constructor
@@ -14,6 +15,7 @@ public class Tests
 	{
 		 rKSF = new ReadKSFile();
 		 sp = new SplitCondition();
+		 wjs = new WriteJSON();
 	}
 	
 	public static void main(String[] args) 
@@ -22,7 +24,9 @@ public class Tests
 		//test2 1462669319
 		//test3 -412481395
 		Tests ts = new Tests();
-		ts.testfromCondition(); 
+		//ts.testfromCondition(); 
+		//ts.testfileForFolder();
+		ts.testFileLoader();
 	}
 	
 
@@ -35,6 +39,31 @@ public class Tests
 			System.out.println(entry.getKey());
 		}
 	} 
+	
+	public void testfileForFolder() 
+	{
+		wjs.filesForFolder(); 
+	}
+	
+	public void testFileLoader ()  //WORKS
+	{
+		wjs.filesForFolder();
+		for (int i=0; i<wjs.filesForFolder().size(); i++) 
+		{
+			JSONObject jsonObject = rKSF.parseObj(wjs.filesForFolder().get(i));
+			
+			
+			String searchstring = sp.getSearchString(jsonObject);
+		
+			for(int a=0; i<sp.flagsArray().size(); a++) 
+			{
+				System.out.println(" ");
+			    System.out.println(sp.flagDelimiter(searchstring, sp.flagsArray().get(a)));
+			}
+			
+			
+		}
+	}
 	   
 }
 
