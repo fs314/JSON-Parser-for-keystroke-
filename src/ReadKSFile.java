@@ -13,43 +13,6 @@ public class ReadKSFile {
 
 	public static void main(String[] args) {}
 	
-	
-	//SEEMS NOT NEEDED
-	/**
-	 * extracts data of type Long ("PressureOnPress", "primaryCode", "XOnPress", "YOnPress", "PressureOnRelease", "XOnRelease", "YOnRelease") 
-	 * of each keystroke data and organises them into an ArrayList of HashMap<String, Long>, where String represents the kind of data extracted and 
-	 * Long represents its value. 
-	 * @param ArrayList<JSONObject> containing the JSONObject associated to each keystroke in the original JSON file
-	 * @return ArrayList<HashMap<String, Long>> 
-	 * **/
-	/**
-	public static ArrayList<HashMap<String, Long>> extractLongData(ArrayList<JSONObject> ksDataList) 
-	{
-		ArrayList<HashMap<String, Long>> data = new ArrayList<HashMap<String, Long>>();
-		ArrayList<String> toExtract = new ArrayList<String>();
-		toExtract.add("PressureOnPress");                       //Maybe put into ENUMS too
-		toExtract.add("primaryCode");
-		toExtract.add("XOnPress");
-		toExtract.add("YOnPress");
-		toExtract.add("PressureOnRelease");
-		toExtract.add("XOnRelease");
-		toExtract.add("YOnRelease");
-
-		for (int i=0; i<ksDataList.size(); i++) 
-    	{
-			HashMap<String, Long> values = new HashMap<String, Long>();  
-			JSONObject jo1 = ksDataList.get(i);
-			for(int a=0; a<toExtract.size(); a++) 
-		    {
-		    	Long value = (Long) jo1.get(toExtract.get(a)); 
-		    	values.put(toExtract.get(a), value);	
-		    	data.add(values);
-		    }
-    	}	
-	return data; 
-	} **/
-	
-	
 	/**
 	 * extracts primary codes(ascii) of each keystroke data and returns them into an ArrayList
 	 * @param ArrayList<JSONObject> containing the JSONObject associated to each keystroke in the original JSON file
@@ -120,7 +83,8 @@ public class ReadKSFile {
    			while (itr1.hasNext())
    			 {
    				JSONObject jo1 = (JSONObject) itr1.next();
-   				jo1.put("keyLabel", extractKsLabel(jsonObject).get(i));        //put keyLabel value into each JSONObject as part of keystroke data 
+   			    //put keyLabel value into each JSONObject as part of keystroke data 
+   				jo1.put("keyLabel", extractKsLabel(jsonObject).get(i));        
    				ksDataList.add(jo1);
    			 }
    		}
