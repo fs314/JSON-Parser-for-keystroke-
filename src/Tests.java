@@ -21,72 +21,20 @@ public class Tests
 	    //test1 1789050386
 		//test2 1462669319
 		//test3 -412481395
-		
-		
 		Tests ts = new Tests();
-		
-		/**
-		ts.testminIndexDelimiter();
-		System.out.println("___________________________________" );
-		ts.testflagDelimiter();
-		**/
-		
-		ts.testflagOccurence(); 
+		ts.testfromCondition(); 
 	}
 	
-	public void testFlagMinIndex() 
-    {
-		JSONObject jsonObject = rKSF.parseObj("-412481395kspattern.json");
-	
-	   String searchString = sp.intoString(sp.pCodeConverter(rKSF.getLetterCodes(rKSF.extractKsData(jsonObject))));
-	   for(int i=0; i< sp.flagsArray().size(); i++)
-	   {
-		 System.out.println(sp.flagsArray().get(i) + " " + sp.flagMinIndex(searchString,  sp.flagsArray().get(i)));  
 
-	   }  
-    }
-	
-	public void testgetSearchString() 
+	public void testfromCondition() 
 	{
 		JSONObject jsonObject = rKSF.parseObj("-412481395kspattern.json");
-		System.out.println(sp.getSearchString(jsonObject));
-	}
-	
-	public void testminIndexDelimiter() 
-	{
-		JSONObject jsonObject = rKSF.parseObj("-412481395kspattern.json");
+		LinkedHashMap<String, ArrayList<JSONObject>> conditions = sp.fromCondition(jsonObject);
 		
-		for (int i=0; i<sp.minIndexDelimiter(sp.getSearchString(jsonObject)).size(); i++) 
-		{
-			System.out.println(sp.minIndexDelimiter(sp.getSearchString(jsonObject)).get(i));
-			System.out.println(" ");
+		for(Map.Entry<String, ArrayList<JSONObject>> entry : conditions.entrySet()) {
+			System.out.println(entry.getKey());
 		}
-	}
-	
-	public void testflagDelimiter() 
-	{
-		JSONObject jsonObject = rKSF.parseObj("-412481395kspattern.json");
-		
-		for (int i=0; i<sp.flagDelimiter(sp.getSearchString(jsonObject)).size(); i++) 
-		{
-			System.out.println("CONDITION" + i);
-			System.out.println(" ");
-			System.out.println(sp.flagDelimiter(sp.getSearchString(jsonObject)).get(i));
-		}
-	}
-	
-	public void testflagOccurence() 
-	{
-		JSONObject jsonObject = rKSF.parseObj("-412481395kspattern.json");
-		
-		for (int i=0; i< sp. flagsArray().size(); i++) 
-		{
-			System.out.println(sp.flagsArray().get(i));	
-			System.out.println(sp.flagsOccurence(sp.getSearchString(jsonObject), sp.flagsArray().get(i)));
-			System.out.println(" ");	
-		}
-	
-	}
+	} 
 	   
 }
 

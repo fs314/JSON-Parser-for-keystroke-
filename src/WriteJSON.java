@@ -31,7 +31,7 @@ public class WriteJSON {
 	 * **/
 	public void createKSFile () throws FileNotFoundException
 	{
-		String fileName = "1462669319kspattern.json";         //Want program to iterate over files in directory and parse them one by one. 
+		String fileName = "-412481395kspattern.json";   //Want program to iterate over files in directory and parse them one by one. 
 		JSONObject jsonObject = rKSF.parseObj(fileName);
 		
 	    JSONObject newJo = new JSONObject();            //JSONObject containing all the participant's data 
@@ -56,7 +56,7 @@ public class WriteJSON {
 	    	newJo.put(conditionsFound.get(i), ks);                       //Add JSONArray ks to JSONObject newJo
 	    }
 	    
-        PrintWriter pw = new PrintWriter("newJSON/JSONExNewFlags.json");   	 // writing JSON to file:"JSONExample.json" in another folder in cwd 
+        PrintWriter pw = new PrintWriter("newJSON/JSONEx2.json");   	 // writing JSON to file:"JSONExample.json" in another folder in cwd 
         pw.write(newJo.toJSONString()); 
           
         pw.flush(); 

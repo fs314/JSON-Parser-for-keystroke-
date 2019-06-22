@@ -15,13 +15,13 @@ public class SplitCondition {
 		 rKSF = new ReadKSFile ();
 	}
 	
-	
 	public static void main(String[] args) {}
+	
 	
 	/**
 	 * Parses original input JSONObject and splits all the keystroke data according to the condition they are generated in. 
 	 * @param  JSONObject original JSONObject containing all keystroke data
-	 * @return LinkedHashMap<String, ArrayList<JSONObject>> where the String represents the condition name 
+	 * @return LinkedHashMap<String, ArrayList<JSONObject>> where the String represents the condition name (or flag) 
 	 * and the ArrayList<JSONObject> all the JSONObject of each keystroke associated to that condition
 	 * **/
 	public LinkedHashMap<String, ArrayList<JSONObject>> fromCondition(JSONObject jsonObject) 
@@ -29,108 +29,42 @@ public class SplitCondition {
 		LinkedHashMap<String, ArrayList<JSONObject>> conditions = new LinkedHashMap<String, ArrayList<JSONObject>>(8); 
 		
 		ArrayList<JSONObject> ksData =  rKSF.extractKsData(jsonObject); 
+		String searchString = getSearchString(jsonObject);
 		
-		for (int i=0; i<conditionDelimiter(jsonObject).get("startIndex").size(); i++)                
+		for (int i=0; i<flagsArray().size(); i++) 
 		{
-			ArrayList<JSONObject> conditionedKsData = new ArrayList<JSONObject>();
+			ArrayList<JSONObject> ksByCondition = new ArrayList<JSONObject>();
 			
-			String conditionName = "condition" + i;   //GIVE MORE DESCRIPTIVE NAME TO CONDITION e.g. use FLAG INSTEAD
-			for (int index= conditionDelimiter(jsonObject).get("startIndex").get(i); index<conditionDelimiter(jsonObject).get("endIndex").get(i); index++)
+			int minIndex = flagMinIndex(searchString, flagsArray().get(i));
+			int maxIndex = flagMaxIndex(searchString, flagsArray().get(i));
+			
+			for(int index = minIndex; index < maxIndex; index++) 
 			{
-				//value of conditionedKsData represents all the elements in ksData that go from startIndex(i) at endIndex(i), via .get(i). 
-				conditionedKsData.add(ksData.get(index));
+				ksByCondition.add(ksData.get(index));
 			}
-		    conditions.put(conditionName, conditionedKsData); 
+			
+			//avoid including conditions that do not have any value in it
+			if (!ksByCondition.isEmpty())                  
+			{
+				conditions.put(flagsArray().get(i), ksByCondition); 
+			}
 		}
 	return conditions;
 	} 
 	
-	
 	/**
-	 * finds start index and end index of each condition string and returns them into one ArrayList<Integer> each
-	 * @param  JSONObject original JSONObject containing all keystroke data
-	 * @return HashMap<String, ArrayList<Integer>> containing two separate lists of indexes, 
-	 * one for the start index of each condition string and one for the end index of each condition string
+	 * splits original input string into a substring starting and ending with the same input flag (inclusive).
+	 * @param String for the string to be searched and String for the flag to look for
+	 * @return String substring of original input string as delimited by a given flag
 	 * **/
-	public LinkedHashMap<String, ArrayList<Integer>> conditionDelimiter (JSONObject jsonObject) 
+	public String flagDelimiter(String searchString, String currFlag)      
 	{
-		LinkedHashMap<String, ArrayList<Integer>> startToEnd = new LinkedHashMap<String, ArrayList<Integer>>();
+		int maxIndex = flagMaxIndex(searchString, currFlag);
+		int minIndex = flagMinIndex(searchString, currFlag);
 		
-		ArrayList<Integer> startIndex = new ArrayList<Integer>();
-		ArrayList<Integer> endIndex = new ArrayList<Integer>();
-		
-		for(int i=0; i<indexByCondition(jsonObject).size(); i++)  
-		{
-			startIndex.add(indexByCondition(jsonObject).get(i));
-			
-			int b= i+1; 
-			if(b<indexByCondition(jsonObject).size()) 
-			{
-				endIndex.add(indexByCondition(jsonObject).get(b));
-			} else {
-				endIndex.add(getSearchString(jsonObject).length() - 1);
-			}
-		}
-		startToEnd.put("startIndex", startIndex);
-		startToEnd.put("endIndex", endIndex);
-		return startToEnd;
+		String conditionString = searchString.substring(minIndex, maxIndex);
+		return conditionString;
 	}
-	
-	
-	/**
-	 * finds minimum index at which each condition string occurs within a given search string and  
-	 * stores the index within a ArrayList<Integer>
-	 * @param  JSONObject original JSONObject containing all keystroke data
-	 * @return ArrayList<Integer> containing the minimum index of occurrence of each condition string
-	 * **/
-	public ArrayList<Integer> indexByCondition(JSONObject jsonObject) 
-	{
-		ArrayList<Integer> splitAt= new ArrayList<Integer>();
-		
-		String data = getSearchString(jsonObject);
-		for(int i=0; i < minIndexDelimiter(data).size(); i++) //for(int i=0; i < minIndexDelimiter(data).size(); i++)
-		{
-			splitAt.add(flagMinIndex(data, minIndexDelimiter(data).get(i)));
-		}
-		return splitAt;
-	}
-	
-	
-	/**
-	 * Splits a given string into substrings going from the minimum index 
-	 * at which one flag has been found to the minimum index 
-	 * at which the following flag has been found, thus delimiting data associated to each condition. 
-	 * @param String for the string to be searched 
-	 * @return ArrayList<String> containing all the newly obtained substrings
-	 * **/
-	public ArrayList<String> minIndexDelimiter (String searchString) //NOT IDEAL AFTER CHANGING THE METHODOLOGY FOR SPLITTING CONDITIONS
-	{
-	  ArrayList<String> flags = flagsArray();
-	  ArrayList<String> conditionString = new ArrayList<String>();
-	 
-	  int endIndex = 0;
-	  int startIndex = 0;
-	  
-	  for (int i=0; i<flags.size(); i++) 
-	  {
-		startIndex = flagMinIndex(searchString, flags.get(i)); 
-		int b = i+1; 
-		if (b < flags.size()) {
-			endIndex = flagMinIndex(searchString, flags.get(b));  
-		} else {
-			endIndex = searchString.length() - 1;
-		}
-		 
-		if (endIndex > startIndex)  //checks that indexes are valid
-		{
-			conditionString.add(searchString.substring(startIndex, endIndex));
-		} else if (endIndex < startIndex) {
-			conditionString.add(startIndex + " " + endIndex + "NULL");     //TESTING 
-		}
-	  }
-	  return conditionString;
-	}
-	
 	
 	/**
 	 * finds the minimum index at which a given flag occurs within the searchString
@@ -147,7 +81,9 @@ public class SplitCondition {
 		{
 			flagIndexes.add(m.start());
 			}
-		for (int i=0; i<flagIndexes.size(); i++)  //loops over array of indexes for given flag to find minimum index of flag or start index of condition
+		
+		//loops over array of indexes for given flag to find minimum index of flag or start
+		for (int i=0; i<flagIndexes.size(); i++)  
 		{
 			int currIndex = flagIndexes.get(i);
 			if(i==0) 
@@ -176,7 +112,8 @@ public class SplitCondition {
 			flagIndexes.add(m.end());
 		}
 		
-		for (int i=0; i<flagIndexes.size(); i++)  //loops over array of indexes for given flag to find maximum index of flag or end index of condition
+		//loops over array of indexes for given flag to find maximum index of flag or end index of condition
+		for (int i=0; i<flagIndexes.size(); i++)  
 		{
 			int currIndex = flagIndexes.get(i);
 			if(i==0) 
@@ -188,29 +125,6 @@ public class SplitCondition {
 	     }
 	return maxIndex;	
 	}
-	
-	
-	/**
-	 * splits original input string into a substring starting and ending with the same input flag (inclusive).
-	 * @param String for the string to be searched and String for the flag to look for
-	 * @return String substring of original input string as delimited by a given flag
-	 * **/
-	public ArrayList<String> flagDelimiter(String searchString)       //NOT CURRENTLY USED
-	{
-	  ArrayList<String> conditionString = new ArrayList<String>();
-	  ArrayList<String> flags = flagsArray();
-	 
-	  for (int i=0; i<flags.size(); i++) 
-	  {
-		  int maxIndex = flagMaxIndex(searchString, flags.get(i));
-		  int minIndex =flagMinIndex(searchString, flags.get(i));
-		  
-	      String delimitString = searchString.substring(minIndex, maxIndex);
-	      conditionString.add(delimitString);
-	  }
-	  return conditionString;
-	}
-	
 	
 	/**
 	 * finds how many times a given flag occurs in a given search string
@@ -226,7 +140,6 @@ public class SplitCondition {
 		{
 			occurences++;
 		}
-		 
 		return occurences;
 	}
 	
