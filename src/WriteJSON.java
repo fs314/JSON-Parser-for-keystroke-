@@ -28,18 +28,17 @@ public class WriteJSON {
     }
 	
 	/**
-	 * creates a new JSON file where keystroke data is divided by condition. 
+	 * creates a new directory for each participant's data and stores the original keystroke data file in it 
+	 * as well as a parsed JSON file where keystroke data is divided by condition. 
 	 * Original keystroke label is preserved as a JSONObject within new main JSON file. 
 	 * **/
 	public void createKSFile () throws FileNotFoundException
 	{
-		JSONObject parsedJo = new JSONObject();  
-
 		for (int i=0; i<filesForFolder().size(); i++) 
 		{
 			JSONObject jsonObject = rKSF.parseObj(filesForFolder().get(i));
 			JSONObject newJo = new JSONObject();
-			String newFilename = "s"+ i;
+			String ppsNumber = "s"+ i;
 			
 			LinkedHashMap<String, ArrayList<JSONObject>> mp = sp.fromCondition(jsonObject);
 		    
@@ -57,8 +56,9 @@ public class WriteJSON {
 				//Add JSONArray ks to JSONObject newJo
 		    	newJo.put(key, ks); 
 			}
-			parsedJo = newJo;
-			printParsedFiles(newFilename, parsedJo); 
+			
+			printFiles(makePpsFolder(ppsNumber) + "static", newJo); 
+			printFiles(makePpsFolder(ppsNumber) + "original", jsonObject);
 	    }
 	}
 	
@@ -88,9 +88,9 @@ public class WriteJSON {
 	 * creates a new JSON file and saves it in a specific folder
 	 * @param String representing the name of the new file and JSONObject for the JSON file to be saved
 	 * **/
-	public void printParsedFiles(String newFilename, JSONObject newJo) throws FileNotFoundException  
-	{
-		  String newPath = ("X:\\home\\Eclipse - workspace\\ParsedKSFiles\\" + newFilename + ".json");	  
+	public void printFiles(String newFilename, JSONObject newJo) throws FileNotFoundException  
+	{  
+		  String newPath = (newFilename + ".json");	  
 		  PrintWriter pw = new PrintWriter(newPath);  
 		  pw.write(newJo.toJSONString()); 
 	          
@@ -98,5 +98,18 @@ public class WriteJSON {
 	        pw.close();
 	}
 	
+	/**
+	 * creates a new folder to store the participant's data 
+	 * @param String representing the participant's number
+	 * @return String representing the new folder's absolute path
+	 * **/
+	public String makePpsFolder(String ppsNumber) 
+	{ 
+		File dir = new File("X:\\home\\Eclipse - workspace\\ParsedKSFiles\\" + ppsNumber);
+		dir.mkdir();
+		
+		String newFilename = dir.getAbsolutePath() + "\\" + ppsNumber + "-"; 
+		return newFilename;
+	}
 
 }
