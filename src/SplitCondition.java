@@ -76,26 +76,27 @@ public class SplitCondition {
 		int minIndex=0;
 		
 		Matcher m = Pattern.compile(currFlag, Pattern.CASE_INSENSITIVE).matcher(searchString);
-		if(m.find()) {
-		while (m.find()) 
+		if(m.find()) 
 		{
-			flagIndexes.add(m.start());
-		}
-		
-		//loops over array of indexes for given flag to find minimum index of flag or start
-		for (int i=0; i<flagIndexes.size(); i++)  
-		{
-			int currIndex = flagIndexes.get(i);
-			if(i==0) 
+			while (m.find()) 
 			{
-				minIndex = flagIndexes.get(i);
-			} else if (currIndex < minIndex) {
-				minIndex =currIndex;
+				flagIndexes.add(m.start());
 		    }
-	    }
+			
+			//loops over array of indexes for given flag to find minimum index of flag or start
+			for (int i=0; i<flagIndexes.size(); i++)  
+			{
+				int currIndex = flagIndexes.get(i);
+				if(i==0) 
+				{
+					minIndex = flagIndexes.get(i);
+				} else if (currIndex < minIndex) {
+					minIndex =currIndex;
+				}
+			}
 		} else {
 			minIndex = -1;
-		} // To HERE
+		} 
 	return minIndex;
 	}
 	
