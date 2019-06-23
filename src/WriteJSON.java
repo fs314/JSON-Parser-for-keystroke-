@@ -33,16 +33,16 @@ public class WriteJSON {
 	 * **/
 	public void createKSFile () throws FileNotFoundException
 	{
-		JSONObject newJo = new JSONObject();  
-		JSONObject jsonObject = new JSONObject(); //file to be parsed
-		String newFilename = "";
-		 
+		JSONObject parsedJo = new JSONObject();  
+
 		for (int i=0; i<filesForFolder().size(); i++) 
 		{
-			jsonObject = rKSF.parseObj(filesForFolder().get(i));
-			newFilename = "s"+ i;
+			JSONObject jsonObject = rKSF.parseObj(filesForFolder().get(i));
+			JSONObject newJo = new JSONObject();
+			String newFilename = "s"+ i;
+		//jsonObject = rKSF.parseObj("-412481395kspattern.json");
+		//newFilename = "TEST3";
 			
-			ArrayList<String> conditionsFound = new ArrayList<String>();
 			LinkedHashMap<String, ArrayList<JSONObject>> mp = sp.fromCondition(jsonObject);
 		    
 			for(String key : mp.keySet()) 
@@ -59,7 +59,8 @@ public class WriteJSON {
 				//Add JSONArray ks to JSONObject newJo
 		    	newJo.put(key, ks); 
 			}
-			printParsedFiles(newFilename, newJo); 
+			parsedJo = newJo;
+			printParsedFiles(newFilename, parsedJo); 
 	    }
 	}
 	

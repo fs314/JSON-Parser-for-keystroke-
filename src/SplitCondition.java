@@ -38,16 +38,14 @@ public class SplitCondition {
 			int minIndex = flagMinIndex(searchString, flagsArray().get(i));
 			int maxIndex = flagMaxIndex(searchString, flagsArray().get(i));
 			
+			if(minIndex != -1 || maxIndex != -1) { //HERE 
 			for(int index = minIndex; index < maxIndex; index++) 
 			{
 				ksByCondition.add(ksData.get(index));
 			}
 			
-			//avoid including conditions that do not have any value in it
-			if (!ksByCondition.isEmpty())                  
-			{
-				conditions.put(flagsArray().get(i), ksByCondition); 
-			}
+			conditions.put(flagsArray().get(i), ksByCondition);
+			}//TO HERE
 		}
 	return conditions;
 	} 
@@ -77,11 +75,12 @@ public class SplitCondition {
 		ArrayList<Integer> flagIndexes = new ArrayList<Integer>();
 		int minIndex=0;
 		
-		Matcher m = Pattern.compile(currFlag.toString(), Pattern.CASE_INSENSITIVE).matcher(searchString);
+		Matcher m = Pattern.compile(currFlag, Pattern.CASE_INSENSITIVE).matcher(searchString);
+		if(m.find()) {
 		while (m.find()) 
 		{
 			flagIndexes.add(m.start());
-			}
+		}
 		
 		//loops over array of indexes for given flag to find minimum index of flag or start
 		for (int i=0; i<flagIndexes.size(); i++)  
@@ -91,9 +90,12 @@ public class SplitCondition {
 			{
 				minIndex = flagIndexes.get(i);
 			} else if (currIndex < minIndex) {
-					minIndex =currIndex;
-			}
-	     }
+				minIndex =currIndex;
+		    }
+	    }
+		} else {
+			minIndex = -1;
+		} // To HERE
 	return minIndex;
 	}
 	
@@ -107,23 +109,27 @@ public class SplitCondition {
 		ArrayList<Integer> flagIndexes = new ArrayList<Integer>();
 		int maxIndex=0;
 		
-		Matcher m = Pattern.compile(currFlag.toString(), Pattern.CASE_INSENSITIVE).matcher(searchString);
+		Matcher m = Pattern.compile(currFlag, Pattern.CASE_INSENSITIVE).matcher(searchString);
+        if(m.find()) {
 		while (m.find()) 
-		{
-			flagIndexes.add(m.end());
+        {
+        	flagIndexes.add(m.end());
 		}
 		
 		//loops over array of indexes for given flag to find maximum index of flag or end index of condition
 		for (int i=0; i<flagIndexes.size(); i++)  
 		{
 			int currIndex = flagIndexes.get(i);
-			if(i==0) 
-			{
-				maxIndex = flagIndexes.get(i);
-			} else if (currIndex > maxIndex) {
-					maxIndex =currIndex;
-			}
+		    if(i==0) 
+		    {
+		    	maxIndex = flagIndexes.get(i);
+		    } else if (currIndex > maxIndex) {
+		    	   maxIndex =currIndex;
+		    }
 	     }
+        } else {
+        	maxIndex = -1;
+        }
 	return maxIndex;	
 	}
 	

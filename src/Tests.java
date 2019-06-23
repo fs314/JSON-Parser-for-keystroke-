@@ -24,19 +24,19 @@ public class Tests
 		//test2 1462669319
 		//test3 -412481395
 		Tests ts = new Tests();
-		//ts.testfromCondition(); 
+		ts.testfromCondition(); 
 		//ts.testfileForFolder();
-		ts.testFileLoader();
+		//ts.testFileLoader();
 	}
 	
 
 	public void testfromCondition() 
 	{
-		JSONObject jsonObject = rKSF.parseObj("-412481395kspattern.json");
+		JSONObject jsonObject = rKSF.parseObj("1789050386kspattern.json");
 		LinkedHashMap<String, ArrayList<JSONObject>> conditions = sp.fromCondition(jsonObject);
 		
-		for(Map.Entry<String, ArrayList<JSONObject>> entry : conditions.entrySet()) {
-			System.out.println(entry.getKey());
+		for(String entry : conditions.keySet()) {
+			System.out.println(entry);
 		}
 	} 
 	
