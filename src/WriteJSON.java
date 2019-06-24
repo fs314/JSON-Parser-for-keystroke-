@@ -105,7 +105,7 @@ public class WriteJSON {
 	 * **/
 	public String makePpsFolder(String ppsNumber) 
 	{ 
-		File dir = new File("X:\\home\\Eclipse - workspace\\ParsedKSFiles\\" + ppsNumber);
+		File dir = new File("X:\\home\\Eclipse - workspace\\ParsedKSFiles\\" + ppsNumber); //PATH TO BE INSERTED THROUGH COMMAND LINE
 		dir.mkdir();
 		
 		String newFilename = dir.getAbsolutePath() + "\\" + ppsNumber + "-"; 
