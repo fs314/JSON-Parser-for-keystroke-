@@ -38,7 +38,7 @@ public class WriteJSON {
 		{
 			JSONObject jsonObject = rKSF.parseObj(filesForFolder().get(i));
 			JSONObject newJo = new JSONObject();
-			String ppsNumber = "s"+ i;
+			String ppsNumber = "s"+ i + sp.extractAnonCode(jsonObject);
 			
 			LinkedHashMap<String, ArrayList<JSONObject>> mp = sp.fromCondition(jsonObject);
 		    

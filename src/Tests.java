@@ -22,47 +22,90 @@ public class Tests
 	{
 	    //test1 1789050386
 		//test2 1462669319
-		//test3 -412481395
+		//test3 -412481395 //TEST3 REVERSE
+		
+		
 		Tests ts = new Tests();
-		ts.testfromCondition(); 
-		//ts.testfileForFolder();
-		//ts.testFileLoader();
+		//ts.testfromCondition(); 
+		//ts.testFlagDelimiter(); 
+		ts.reverseTest();
+		
 	}
 	
 
 	public void testfromCondition() 
 	{
-		JSONObject jsonObject = rKSF.parseObj("1789050386kspattern.json");
-		LinkedHashMap<String, ArrayList<JSONObject>> conditions = sp.fromCondition(jsonObject);
+		JSONObject jsonObject = rKSF.parseObj("-412481395kspattern.json");
+		System.out.println(sp.getSearchString(jsonObject)); 
 		
+		LinkedHashMap<String, ArrayList<JSONObject>> conditions = sp.fromCondition(jsonObject);
 		for(String entry : conditions.keySet()) {
-			System.out.println(entry);
+			System.out.println("FLAG: " + entry);
+			System.out.println(sp.flagDelimiter(sp.getSearchString(jsonObject), entry));
+			System.out.println(" ");
+		}
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(" ");
+		
+		JSONObject jsonObject1 = rKSF.parseObj("s0C-static.json");
+		System.out.println(sp.getSearchString(jsonObject1)); 
+		
+		LinkedHashMap<String, ArrayList<JSONObject>> conditions1 = sp.fromCondition(jsonObject1);
+		for(String entry : conditions1.keySet()) {
+			System.out.println("FLAG: " + entry);
+			System.out.println(sp.flagDelimiter(sp.getSearchString(jsonObject1), entry));
+			System.out.println(" ");
 		}
 	} 
 	
-	public void testfileForFolder() 
+	public void testFlagDelimiter() 
 	{
-		wjs.filesForFolder(); 
+		JSONObject jsonObject = rKSF.parseObj("-412481395kspattern.json");
+		System.out.println(sp.getSearchString(jsonObject)); 
+		System.out.println(" ");
+		
+		for(int i=0; i< sp.flagsArray().size(); i++) 
+		{
+			
+		    System.out.println(sp.flagsArray().get(i));
+		    //System.out.println(sp.flagMinIndex(sp.getSearchString(jsonObject), sp.flagsArray().get(i)));
+		    //System.out.println(sp.flagMaxIndex(sp.getSearchString(jsonObject), sp.flagsArray().get(i)));
+		    System.out.println(sp.flagDelimiter(sp.getSearchString(jsonObject), sp.flagsArray().get(i)));
+		    System.out.println(" ");
+		}
+		
+	    
 	}
 	
-	public void testFileLoader ()  //WORKS
+	public void reverseTest () 
 	{
-		wjs.filesForFolder();
-		for (int i=0; i<wjs.filesForFolder().size(); i++) 
+		JSONObject jsonObject = rKSF.parseObj("TESTnoLastFlag.json");
+		System.out.println("NEW JSON FILE: " + sp.getSearchString(jsonObject)); 
+		System.out.println(" _____________________________________________________________________________");
+		for(int i=0; i< sp.flagsArray().size(); i++) 
 		{
-			JSONObject jsonObject = rKSF.parseObj(wjs.filesForFolder().get(i));
 			
-			
-			String searchstring = sp.getSearchString(jsonObject);
-		
-			for(int a=0; i<sp.flagsArray().size(); a++) 
-			{
-				System.out.println(" ");
-			    System.out.println(sp.flagDelimiter(searchstring, sp.flagsArray().get(a)));
-			}
-			
-			
+		    System.out.println(sp.flagsArray().get(i));
+		    System.out.println(sp.flagDelimiter(sp.getSearchString(jsonObject), sp.flagsArray().get(i)));
+		    System.out.println(" ");
 		}
+		
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(" ");
+		
+		System.out.println("OLD JSON FILE: " + sp.getSearchString(rKSF.parseObj("-412481395kspattern.json")));
+		System.out.println(" _____________________________________________________________________________");
+		for(int i=0; i< sp.flagsArray().size(); i++) 
+		{
+			
+		    System.out.println(sp.flagsArray().get(i));
+		    System.out.println(sp.flagDelimiter(sp.getSearchString(rKSF.parseObj("-412481395kspattern.json")), sp.flagsArray().get(i)));
+		    System.out.println(" ");
+		}
+		
+		//System.out.println(sp.flagDelimiter(sp.getSearchString(jsonObject), "HTRGWVX"));
 	}
 	   
 }

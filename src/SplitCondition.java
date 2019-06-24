@@ -30,7 +30,7 @@ public class SplitCondition {
 		
 		ArrayList<JSONObject> ksData =  rKSF.extractKsData(jsonObject); 
 		String searchString = getSearchString(jsonObject);
-		
+	
 		for (int i=0; i<flagsArray().size(); i++) 
 		{
 			ArrayList<JSONObject> ksByCondition = new ArrayList<JSONObject>();
@@ -38,16 +38,39 @@ public class SplitCondition {
 			int minIndex = flagMinIndex(searchString, flagsArray().get(i));
 			int maxIndex = flagMaxIndex(searchString, flagsArray().get(i));
 			
-			if(minIndex != -1 || maxIndex != -1) { //HERE 
+			if (maxIndex != 0 && minIndex != 0 || maxIndex != 0 && minIndex == 0) 
+			{
+				for(int index = minIndex; index < maxIndex; index++) 
+				{
+					ksByCondition.add(ksData.get(index));
+				}
+				conditions.put(flagsArray().get(i), ksByCondition);
+			}
+		} 
+	return conditions;
+	} 
+	
+	/**
+	 * extracts the anonymous code from the data collected. 
+	 * @param JSONObject original JSONObject containing all keystroke data
+	 * @return String substring of original input string as delimited by a given flag
+	 * **/
+	public String extractAnonCode(JSONObject jsonObject) 
+	{
+		String anonCode = "C"; 
+		
+		String searchString = getSearchString(jsonObject);
+		int minIndex = flagMinIndex(searchString, "code");
+		int maxIndex = flagMaxIndex(searchString, "code");
+		
+		if(minIndex != -1 && maxIndex != -1) 
+		{ 
 			for(int index = minIndex; index < maxIndex; index++) 
 			{
-				ksByCondition.add(ksData.get(index));
+				anonCode= anonCode + searchString.substring(minIndex, maxIndex);
 			}
-			
-			conditions.put(flagsArray().get(i), ksByCondition);
-			}//TO HERE
 		}
-	return conditions;
+		return anonCode;
 	} 
 	
 	/**
@@ -57,11 +80,15 @@ public class SplitCondition {
 	 * **/
 	public String flagDelimiter(String searchString, String currFlag)      
 	{
+		String conditionString = " ";
 		int maxIndex = flagMaxIndex(searchString, currFlag);
 		int minIndex = flagMinIndex(searchString, currFlag);
 		
-		String conditionString = searchString.substring(minIndex, maxIndex);
-	
+		if (maxIndex != 0 && minIndex != 0 || maxIndex != 0 && minIndex == 0) 
+		{
+			conditionString = searchString.substring(minIndex, maxIndex);
+		}
+		
 		return conditionString;
 	}
 	
@@ -76,8 +103,6 @@ public class SplitCondition {
 		int minIndex=0;
 		
 		Matcher m = Pattern.compile(currFlag, Pattern.CASE_INSENSITIVE).matcher(searchString);
-		if(m.find()) 
-		{
 			while (m.find()) 
 			{
 				flagIndexes.add(m.start());
@@ -94,9 +119,7 @@ public class SplitCondition {
 					minIndex =currIndex;
 				}
 			}
-		} else {
-			minIndex = -1;
-		} 
+			
 	return minIndex;
 	}
 	
@@ -111,7 +134,6 @@ public class SplitCondition {
 		int maxIndex=0;
 		
 		Matcher m = Pattern.compile(currFlag, Pattern.CASE_INSENSITIVE).matcher(searchString);
-        if(m.find()) {
 		while (m.find()) 
         {
         	flagIndexes.add(m.end());
@@ -128,11 +150,38 @@ public class SplitCondition {
 		    	   maxIndex =currIndex;
 		    }
 	     }
-        } else {
-        	maxIndex = -1;
-        }
+
 	return maxIndex;	
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * finds how many times a given flag occurs in a given search string
