@@ -68,7 +68,9 @@ public class ReadKSFile {
      * @param JSONObject original JSONObject containing all keystroke data
      * @return ArrayList of JSONObjects related to each keystroke
      * **/
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked") 
+	// otherwise line jo1.put("keyLabel", extractKsLabel(jsonObject).get(i));" 
+	//raises warning of type safety (References to generic type HashMap<K,V> should be parameterized).
    	public ArrayList<JSONObject> extractKsData(JSONObject jsonObject)  
    	{
    		ArrayList<JSONObject> ksDataList = new ArrayList<JSONObject>();
@@ -78,12 +80,12 @@ public class ReadKSFile {
     	{
    			JSONArray ja = ksArray.get(i); 
    		
-   			Iterator itr1 = ja.iterator(); 	
+   			Iterator<?> itr1 = ja.iterator(); 	 
    			while (itr1.hasNext())
    			 {
-   				JSONObject jo1 = (JSONObject) itr1.next();
-   			    //put keyLabel value into each JSONObject as part of keystroke data 
-   				jo1.put("keyLabel", extractKsLabel(jsonObject).get(i));        
+   				JSONObject jo1 = (JSONObject) itr1.next(); 
+   			    //put keyLabel value into each JSONObject as part of keystroke data        
+   				jo1.put("keyLabel", extractKsLabel(jsonObject).get(i));  
    				ksDataList.add(jo1);
    			 }
    		}
@@ -116,7 +118,7 @@ public class ReadKSFile {
   	public ArrayList<String> extractKsLabel(JSONObject jsonObject)                          
   	{
   		ArrayList<String> ksLabels = new ArrayList<String>();
-  		Map keys = (Map) jsonObject;
+  		Map<?,?> keys = (Map<?,?>) jsonObject;
   		
   		for  (Object key: keys.keySet())     
   		{

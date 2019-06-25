@@ -213,7 +213,8 @@ public class SplitCondition {
 	for (int i=0; i<letterCodes.size(); i++) 
 	{
 		int asciiCode = letterCodes.get(i).intValue();
-		String translated = String.valueOf(asciiCode);
+		char asciiChar = (char) asciiCode;
+ 		String translated = String.valueOf(asciiChar);
 		fromAscii.add(translated);  
 	}		 
 	return fromAscii;
