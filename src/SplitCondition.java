@@ -15,8 +15,6 @@ public class SplitCondition {
 		 rKSF = new ReadKSFile ();
 	}
 	
-	public static void main(String[] args) {}
-	
 	
 	/**
 	 * Parses original input JSONObject and splits all the keystroke data according to the condition they are generated in. 
@@ -155,34 +153,6 @@ public class SplitCondition {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * finds how many times a given flag occurs in a given search string
 	 * @param String for the string to be searched and String for the flag to look for
@@ -243,7 +213,7 @@ public class SplitCondition {
 	for (int i=0; i<letterCodes.size(); i++) 
 	{
 		int asciiCode = letterCodes.get(i).intValue();
-		String translated = new Character((char)asciiCode).toString();
+		String translated = String.valueOf(asciiCode);
 		fromAscii.add(translated);  
 	}		 
 	return fromAscii;

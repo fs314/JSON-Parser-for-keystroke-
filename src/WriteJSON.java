@@ -6,7 +6,6 @@ import java.util.*;
 import org.json.simple.JSONArray; 
 import org.json.simple.JSONObject;
 
-
 public class WriteJSON {
 	
 	ReadKSFile rKSF;
@@ -21,22 +20,17 @@ public class WriteJSON {
 		 sp = new SplitCondition();
 	}
 	
-	public static void main(String[] args) throws FileNotFoundException  
-    { 
-		WriteJSON wJS = new WriteJSON ();
-		wJS.createKSFile();
-    }
-	
 	/**
 	 * creates a new directory for each participant's data and stores the original keystroke data file in it 
 	 * as well as a parsed JSON file where keystroke data is divided by condition. 
 	 * Original keystroke label is preserved as a JSONObject within new main JSON file. 
 	 * **/
-	public void createKSFile () throws FileNotFoundException
+	@SuppressWarnings("unchecked")
+	public void createKSFile (String originalPath, String destinationPath) throws FileNotFoundException
 	{
-		for (int i=0; i<filesForFolder().size(); i++) 
+		for (int i=0; i<filesForFolder(originalPath).size(); i++) 
 		{
-			JSONObject jsonObject = rKSF.parseObj(filesForFolder().get(i));
+			JSONObject jsonObject = rKSF.parseObj(filesForFolder(originalPath).get(i));
 			JSONObject newJo = new JSONObject();
 			String ppsNumber = "s"+ i + sp.extractAnonCode(jsonObject);
 			
@@ -50,15 +44,15 @@ public class WriteJSON {
 				for(int a=0; a< mp.get(key).size(); a++) 
 				{
 					//iterate over array of JSONObjects associated to every condition (as split by SplitCondition.fromCondition)
-					JSONObject jo1 = mp.get(key).get(a);  
-					ks.add(jo1);                                            
+					 // JSONObject jo1 = new JSONObject();  
+					ks.add(mp.get(key).get(a));                                            
 			    }
 				//Add JSONArray ks to JSONObject newJo
 		    	newJo.put(key, ks); 
 			}
 			
-			printFiles(makePpsFolder(ppsNumber) + "static", newJo); 
-			printFiles(makePpsFolder(ppsNumber) + "original", jsonObject);
+			printFiles(makePpsFolder(ppsNumber, destinationPath) + "static", newJo); 
+			printFiles(makePpsFolder(ppsNumber, destinationPath) + "original", jsonObject);
 	    }
 	}
 	
@@ -67,11 +61,11 @@ public class WriteJSON {
 	 * gets name of every file in a selected folder 
 	 * @return ArrayList<String> containing the names of all the files within a selected folder
 	 * **/
-	public ArrayList<String> filesForFolder() 
+	public ArrayList<String> filesForFolder(String originalPath) 
 	{
 		ArrayList<String> filename = new ArrayList<String>();
 		
-		File folder = new File("X:\\home\\Eclipse - workspace\\OriginalKSFiles");
+		File folder = new File(originalPath);                             //ORIGINAL PATH TO BE INSERTED MANUALLY VIA COMMAND "X:\\home\\Eclipse - workspace\\OriginalKSFiles"
 	    File [] listOfFiles = folder.listFiles();
 	    
 	    for (File file : listOfFiles) 
@@ -103,9 +97,9 @@ public class WriteJSON {
 	 * @param String representing the participant's number
 	 * @return String representing the new folder's absolute path
 	 * **/
-	public String makePpsFolder(String ppsNumber) 
+	public String makePpsFolder(String ppsNumber, String destinationPath) 
 	{ 
-		File dir = new File("X:\\home\\Eclipse - workspace\\ParsedKSFiles\\" + ppsNumber); //PATH TO BE INSERTED THROUGH COMMAND LINE
+		File dir = new File(destinationPath + ppsNumber);                     //PATH TO BE INSERTED THROUGH COMMAND LINE "X:\\home\\Eclipse - workspace\\ParsedKSFiles\\"
 		dir.mkdir();
 		
 		String newFilename = dir.getAbsolutePath() + "\\" + ppsNumber + "-"; 

@@ -11,8 +11,6 @@ import java.util.*;
 
 public class ReadKSFile {
 
-	public static void main(String[] args) {}
-	
 	/**
 	 * extracts primary codes(ascii) of each keystroke data and returns them into an ArrayList
 	 * @param ArrayList<JSONObject> containing the JSONObject associated to each keystroke in the original JSON file
@@ -70,6 +68,7 @@ public class ReadKSFile {
      * @param JSONObject original JSONObject containing all keystroke data
      * @return ArrayList of JSONObjects related to each keystroke
      * **/
+	@SuppressWarnings("unchecked")
    	public ArrayList<JSONObject> extractKsData(JSONObject jsonObject)  
    	{
    		ArrayList<JSONObject> ksDataList = new ArrayList<JSONObject>();
@@ -113,6 +112,7 @@ public class ReadKSFile {
      * @param JSONObject original JSONObject containing all keystroke data
      * @return ArrayList of keystroke labels 
      * **/
+    
   	public ArrayList<String> extractKsLabel(JSONObject jsonObject)                          
   	{
   		ArrayList<String> ksLabels = new ArrayList<String>();
