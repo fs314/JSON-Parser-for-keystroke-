@@ -43,8 +43,7 @@ public class WriteJSON {
 				
 				for(int a=0; a< mp.get(key).size(); a++) 
 				{
-					//iterate over array of JSONObjects associated to every condition (as split by SplitCondition.fromCondition)
-					 // JSONObject jo1 = new JSONObject();  
+					//iterate over array of JSONObjects associated to every condition (as split by SplitCondition.fromCondition) 
 					ks.add(mp.get(key).get(a));                                            
 			    }
 				//Add JSONArray ks to JSONObject newJo
