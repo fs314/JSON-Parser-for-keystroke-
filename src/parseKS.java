@@ -9,8 +9,9 @@ public class parseKS {
 		wjs = new WriteJSON();
 	}
 	
-	public static void main(String[] args) 
+	public static void main(String args[]) 
 	{
+		
 		parseKS pks = new parseKS();
 		pks.parseFiles(args[0], args[1]);
 	}

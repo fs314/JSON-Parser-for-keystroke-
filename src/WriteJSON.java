@@ -67,11 +67,12 @@ public class WriteJSON {
 		File folder = new File(originalPath);                             //ORIGINAL PATH TO BE INSERTED MANUALLY VIA COMMAND "X:\\home\\Eclipse - workspace\\OriginalKSFiles"
 	    File [] listOfFiles = folder.listFiles();
 	    
+	    
 	    for (File file : listOfFiles) 
 	    {
 	    	if (file.isFile()) 
 	    	{
-	    		filename.add(file.getName().toString());
+	    		filename.add(originalPath + "\\" + file.getName().toString()); //CHANGED
 	    	}
 	    }
 	    return filename;
@@ -98,7 +99,7 @@ public class WriteJSON {
 	 * **/
 	public String makePpsFolder(String ppsNumber, String destinationPath) 
 	{ 
-		File dir = new File(destinationPath + ppsNumber);                     //PATH TO BE INSERTED THROUGH COMMAND LINE "X:\\home\\Eclipse - workspace\\ParsedKSFiles\\"
+		File dir = new File(destinationPath + "\\" + ppsNumber);                     //PATH TO BE INSERTED THROUGH COMMAND LINE "X:\\home\\Eclipse - workspace\\ParsedKSFiles\\"
 		dir.mkdir();
 		
 		String newFilename = dir.getAbsolutePath() + "\\" + ppsNumber + "-"; 

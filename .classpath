@@ -3,6 +3,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="//bodiam/ARC/fs314/Essential-User-Settings/Downloads/java-json.jar/java-json.jar"/>
-	<classpathentry exported="true" kind="lib" path="//bodiam/ARC/fs314/Essential-User-Settings/Downloads/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="X:/home/Eclipse - workspace/JSONParser/lib/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
