@@ -72,7 +72,7 @@ public class WriteJSON {
 	    {
 	    	if (file.isFile()) 
 	    	{
-	    		filename.add(originalPath + "\\" + file.getName().toString()); //CHANGED
+	    		filename.add(originalPath + "\\" + file.getName()); 
 	    	}
 	    }
 	    return filename;
