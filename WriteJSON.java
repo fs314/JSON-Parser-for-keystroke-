@@ -60,7 +60,7 @@ public class WriteJSON {
 	 * gets name of every file in a selected folder 
 	 * @return ArrayList<String> containing the names of all the files within a selected folder
 	 * **/
-	public ArrayList<String> filesForFolder(String originalPath) 
+	public ArrayList<String> filesForFolder(String originalPath) throws FileNotFoundException
 	{
 		ArrayList<String> filename = new ArrayList<String>();
 		
@@ -72,7 +72,7 @@ public class WriteJSON {
 	    {
 	    	if (file.isFile()) 
 	    	{
-	    		filename.add(originalPath + "\\" + file.getName()); 
+	    		filename.add(originalPath + "//" + file.getName().toString()); //CHANGED
 	    	}
 	    }
 	    return filename;
@@ -99,10 +99,10 @@ public class WriteJSON {
 	 * **/
 	public String makePpsFolder(String ppsNumber, String destinationPath) 
 	{ 
-		File dir = new File(destinationPath + "\\" + ppsNumber);                     //PATH TO BE INSERTED THROUGH COMMAND LINE "X:\\home\\Eclipse - workspace\\ParsedKSFiles\\"
+		File dir = new File(destinationPath + "//" + ppsNumber);                     //PATH TO BE INSERTED THROUGH COMMAND LINE "X:\\home\\Eclipse - workspace\\ParsedKSFiles\\"
 		dir.mkdir();
 		
-		String newFilename = dir.getAbsolutePath() + "\\" + ppsNumber + "-"; 
+		String newFilename = dir.getAbsolutePath() + "//" + ppsNumber + "-"; 
 		return newFilename;
 	}
 

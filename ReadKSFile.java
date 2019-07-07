@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+//import java.io.File;
 import java.io.FileReader;
 import java.util.*; 
 
@@ -132,7 +133,7 @@ public class ReadKSFile {
      * @param String representing the name of the JSON file to parse 
      * @return Parsed file as JSONObject
      * **/
-	public JSONObject parseObj (String fileName) 
+	public JSONObject parseObj (String fileName) //throws FileNotFoundException
 	{
 		JSONParser parser = new JSONParser();
 	    JSONObject jsonObject = new JSONObject();
@@ -144,7 +145,13 @@ public class ReadKSFile {
 		catch(FileNotFoundException e) {e.printStackTrace();}
 		catch(IOException e) {e.printStackTrace();}
 		catch(ParseException e) {e.printStackTrace();}
-		catch(Exception e) {e.printStackTrace();}
+		catch(Exception e) {e.printStackTrace();} 
+		/*File ksFile = new File(fileName);
+		
+		if(!ksFile.exists()) 
+		{
+			throw new FileNotFoundException("Failed to find file: " + ksFile.getAbsolutePath());
+		} */
 		    
 		return jsonObject;
 	}
