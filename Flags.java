@@ -1,5 +1,5 @@
 
-public enum Flags { 
+public enum Flags {
 GDYESVD,
 UTRBWVD,
 TRYGSVX,

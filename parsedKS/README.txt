@@ -1,1 +1,0 @@
-In this folder will go all the parsed keystroe data
